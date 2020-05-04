@@ -11,10 +11,16 @@
     "https"
   ],
   "paths": {
-    "/": {
+    "/{id}": {
       "put": {
         "operationId": "putFolder",
         "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "type": "string"
+          },
           {
             "in": "body",
             "name": "requestBody",
@@ -46,14 +52,22 @@
       "properties": {
         "name": {
           "type": "string"
-        },
-        "parent": {
-          "$ref": "#/definitions/Name"
         }
       }
     },
     "Name": {
       "type": "string",
+      "properties": {
+        "id": {
+          "type": "string"
+        }
+      }
+    },
+    "id": {
+      "type": "object",
+      "required": [
+        "id"
+      ],
       "properties": {
         "id": {
           "type": "string"
