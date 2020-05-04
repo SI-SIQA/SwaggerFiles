@@ -36,32 +36,6 @@
       }
     },
     "/": {
-      "post": {
-        "operationId": "createFolder",
-        "parameters": [
-          {
-            "in": "body",
-            "name": "requestBody",
-            "schema": {
-              "$ref": "#/definitions/Box"
-            }
-          },
-          {
-            "in": "header",
-            "name": "Content-Type",
-            "default": "application/json",
-            "type": "string"
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "successfully created"
-          }
-        }
-      }
-    }
-  },
-   "/": {
       "put": {
         "operationId": "putFolder",
         "parameters": [
