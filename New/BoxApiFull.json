@@ -1,0 +1,1392 @@
+{
+	"title": "Box",
+	"version": 2,
+	"baseUri": "https://api.box.com/{version}/",
+	"mediaType": "application/json",
+	"securitySchemes": [
+		{
+			"oauth_2_0": null
+		}
+	],
+	"schemas": [
+		{
+			"User": null
+		},
+		{
+			"UpdateMembership": null
+		},
+		{
+			"CommentsCollection": null
+		},
+		{
+			"NewComment": null
+		},
+		{
+			"TaskAssignment": null
+		},
+		{
+			"AssignmentSummariesCollecton": null
+		},
+		{
+			"EmailAlias": null
+		},
+		{
+			"EventsCollection": null
+		},
+		{
+			"FileInformationUpdate": null
+		},
+		{
+			"FileVersion": null
+		},
+		{
+			"NewCollaboration": null
+		},
+		{
+			"EmailAliasesCollection": null
+		},
+		{
+			"Group": null
+		},
+		{
+			"TaskUpdate": null
+		},
+		{
+			"MiniGroups": null
+		},
+		{
+			"UserUpdate": null
+		},
+		{
+			"ItemsCollection": null
+		},
+		{
+			"CollaborationsCollection": null
+		},
+		{
+			"NewUser": null
+		},
+		{
+			"GroupMembershipEntry": null
+		},
+		{
+			"Task_assignmentUpdate": null
+		},
+		{
+			"NewItem": null
+		},
+		{
+			"FileVersionPromote": null
+		},
+		{
+			"NewEmailAlias": null
+		},
+		{
+			"NewFolder": null
+		},
+		{
+			"EventsPollInformation": null
+		},
+		{
+			"UserFolderMove": null
+		},
+		{
+			"Folder": null
+		},
+		{
+			"NewGroupMembership": null
+		},
+		{
+			"File": null
+		},
+		{
+			"GroupMemberships": null
+		},
+		{
+			"Comment": null
+		},
+		{
+			"VersionsCollection": null
+		},
+		{
+			"NewTask": null
+		},
+		{
+			"UsersCollection": null
+		},
+		{
+			"CommentUpdate": null
+		},
+		{
+			"FolderUpdate": null
+		},
+		{
+			"NewTaskAssignment": null
+		},
+		{
+			"TaskSummariesCollection": null
+		},
+		{
+			"Collaboration": null
+		},
+		{
+			"Task": null
+		},
+		{
+			"SearchResults": null
+		},
+		{
+			"NewGroup": null
+		}
+	],
+	"resourceTypes": [
+		{
+			"standardResponse": null
+		},
+		{
+			"collection": null
+		},
+		{
+			"collectionItem": null
+		}
+	],
+	"traits": [
+		{
+			"fieldAware": null
+		},
+		{
+			"pageable": null
+		},
+		{
+			"notifiable": null
+		}
+	],
+	"securedBy": [
+		"oauth_2_0"
+	],
+	"/folders": {
+		"type": {
+			"collection": {
+				"objectName": "Folder"
+			}
+		},
+		"post": {
+			"body": {
+				"application/json": {
+					"example": null
+				}
+			},
+			"responses": {
+				"201": {
+					"body": {
+						"application/json": {
+							"example": null
+						}
+					}
+				}
+			}
+		},
+		"/{folderId}": {
+			"type": {
+				"collectionItem": {
+					"item": "Folder"
+				}
+			},
+			"uriParameters": {
+				"folderId": {
+					"description": "The ID of the parent folder\n"
+				}
+			},
+			"get": {
+				"description": "Retrieves the full metadata about a folder, including information about\nwhen it was last updated as well as the files and folders contained in it.\nThe root folder of a Box account is always represented by the id **0**.\n",
+				"responses": {
+					"200": {
+						"body": {
+							"application/json": {
+								"example": null
+							}
+						}
+					}
+				}
+			},
+			"put": {
+				"description": "Used to update information about the folder. To move a folder, update the ID\nof its parent. To enable an email address that can be used to upload files\nto this folder, update the `folder_upload_email` attribute. An optional\nIf-Match header can be included to ensure that client only updates the folder\nif it knows about the latest version.\n",
+				"body": {
+					"application/json": {
+						"schema": "FolderUpdate",
+						"example": null
+					}
+				},
+				"responses": {
+					"200": {
+						"body": {
+							"application/json": {
+								"example": null
+							}
+						}
+					}
+				}
+			},
+			"delete": {
+				"description": "Used to delete a folder. A recursive parameter must be included in order to\ndelete folders that have items inside of them. An optional `If-Match` header\ncan be included to ensure that client only deletes the folder if it knows\nabout the latest version.\n",
+				"queryParameters": {
+					"recursive": {
+						"description": "Whether to delete this folder if it has items inside of it.",
+						"type": "boolean"
+					}
+				}
+			},
+			"post": {
+				"description": "Restores an item that has been moved to the trash. Default behavior is to\nrestore the item to the folder it was in before it was moved to the trash.\nIf that parent folder no longer exists or if there is now an item with the\nsame name in that parent folder, the new parent folder and/or new name\nwill need to be included in the request.\n",
+				"body": {
+					"application/json": {
+						"schema": "NewFolder",
+						"example": null
+					}
+				},
+				"responses": {
+					"201": {
+						"description": "Item was succesfully created.",
+						"body": {
+							"application/json": {
+								"schema": "Folder",
+								"example": null
+							}
+						}
+					},
+					"403": {
+						"description": "The user doesn't have permission to restore items from the trash"
+					},
+					"405": {
+						"description": "The item is not in the trash"
+					},
+					"409": {
+						"description": "There is an item with the same name in the folder the item is being restored to"
+					}
+				}
+			},
+			"/items": {
+				"type": "standardResponse",
+				"get": {
+					"is": [
+						"fieldAware",
+						"pageable: { default: 100 }"
+					],
+					"description": "Retrieves the files and/or folders contained within this folder\nwithout any other metadata about the folder.\n",
+					"responses": {
+						"200": {
+							"body": {
+								"application/json": {
+									"schema": "ItemsCollection",
+									"example": null
+								}
+							}
+						}
+					}
+				}
+			},
+			"/copy": {
+				"type": "standardResponse",
+				"post": {
+					"description": "Used to create a copy of a folder in another folder. The original version\nof the folder will not be altered.\n",
+					"body": {
+						"application/json": {
+							"schema": "NewItem",
+							"example": null
+						}
+					},
+					"responses": {
+						"200": {
+							"body": {
+								"application/json": {
+									"schema": "Folder",
+									"example": null
+								}
+							}
+						}
+					}
+				}
+			},
+			"/collaborations": {
+				"type": "standardResponse",
+				"get": {
+					"description": "Use this to get a list of all the collaborations on a folder i.e. all of\nthe users that have access to that folder.\n",
+					"responses": {
+						"200": {
+							"body": {
+								"application/json": {
+									"schema": "CollaborationsCollection",
+									"example": null
+								}
+							}
+						}
+					}
+				}
+			},
+			"/trash": {
+				"type": "standardResponse",
+				"get": {
+					"description": "Retrieves an item that has been moved to the trash. The full item will be\nreturned, including information about when the it was moved to the trash.\n",
+					"responses": {
+						"200": {
+							"body": {
+								"application/json": {
+									"schema": "Folder",
+									"example": null
+								}
+							}
+						}
+					}
+				},
+				"delete": {
+					"description": "Permanently deletes an item that is in the trash. The item will no longer\nexist in Box. This action cannot be undone.\n"
+				}
+			}
+		},
+		"/trash/items": {
+			"type": "standardResponse",
+			"is": [
+				"fieldAware",
+				"pageable: { default: 100 }"
+			],
+			"get": {
+				"description": "Retrieves the files and/or folders that have been moved to the trash. Any\nattribute in the full files or folders objects can be passed in with the\nfields parameter to get specific attributes, and only those specific\nattributes back; otherwise, the mini format is returned for each item by\ndefault.\nMultiple attributes can be passed in separated by commas e.g.\n`fields=name,created_at`. Paginated results can be retrieved using the limit\nand offset parameters.\n",
+				"responses": {
+					"200": {
+						"body": {
+							"application/json": {
+								"schema": "ItemsCollection",
+								"example": null
+							}
+						}
+					}
+				}
+			}
+		}
+	},
+	"/files/{fileId}": {
+		"type": {
+			"collectionItem": {
+				"item": "File"
+			}
+		},
+		"uriParameters": {
+			"fileId": {
+				"description": "Box's unique string identifying this file."
+			}
+		},
+		"get": {
+			"description": "Used to retrieve the metadata about a file.",
+			"responses": {
+				"200": {
+					"body": {
+						"application/json": {
+							"example": null
+						}
+					}
+				}
+			}
+		},
+		"put": {
+			"description": "Used to update individual or multiple fields in the file object, including\nrenaming the file, changing its description, and creating a shared link\nfor the file. To move a file, change the ID of its parent folder. An optional\n`If-Match` header can be included to ensure that client only updates the file\nif it knows about the latest version.\n",
+			"body": {
+				"application/json": {
+					"schema": "FileInformationUpdate",
+					"example": null
+				}
+			},
+			"responses": {
+				"200": {
+					"body": {
+						"application/json": {
+							"example": null
+						}
+					}
+				}
+			}
+		},
+		"delete": {
+			"description": "Discards a file to the trash. The 'etag' of the file can be included as an\n`If-Match` header to prevent race conditions.\nTrash: Depending on the enterprise settings for this user, the item will\neither be actually deleted from Box or moved to the trash.\n",
+			"responses": {
+				"412": {
+					"description": "If the `If-Match` header is sent and fails."
+				}
+			}
+		},
+		"post": {
+			"description": "Restores an item that has been moved to the trash. Default behavior is to\nrestore the item to the folder it was in before it was moved to the trash.\nIf that parent folder no longer exists or if there is now an item with the\nsame name in that parent folder, the new parent folder and/or new name will\nneed to be included in the request.\n",
+			"body": {
+				"application/json": {
+					"schema": "NewItem",
+					"example": null
+				}
+			},
+			"responses": {
+				"201": {
+					"body": {
+						"application/json": {
+							"schema": "File",
+							"example": null
+						}
+					}
+				}
+			}
+		},
+		"/versions": {
+			"type": "standardResponse",
+			"get": {
+				"description": "If there are previous versions of this file, this method can be used to\nretrieve metadata about the older versions.\n**ALERT: Versions are only tracked for Box users with premium accounts.**\n",
+				"responses": {
+					"200": {
+						"description": "An array of version objects are returned. If there are no previous\nversions of this file, then an empty array will be returned.\n",
+						"body": {
+							"application/json": {
+								"schema": "VersionsCollection",
+								"example": null
+							}
+						}
+					}
+				}
+			},
+			"/current": {
+				"type": "standardResponse",
+				"post": {
+					"description": "Promote an Old Version of a File\nIf there are previous versions of this file, this method can be used to promote one of the older versions to the top of the stack. This actually mints a copy of the old version and puts it on the top of the versions stack. The file will have the exact same contents, the same SHA1/etag, and the same name as the original. Other properties such as comments do not get updated to their former values.\n",
+					"body": {
+						"application/json": {
+							"schema": "FileVersionPromote",
+							"example": null
+						}
+					},
+					"responses": {
+						"201": {
+							"body": {
+								"application/json": {
+									"schema": "FileVersion",
+									"example": null
+								}
+							}
+						}
+					}
+				}
+			},
+			"/{version_id}": {
+				"type": "standardResponse",
+				"description": "Discards a specific file version to the trash.",
+				"delete": {
+					"description": "Discards a specific file version to the trash.\n\nTrash: Depending on the enterprise settings for this user, the item will either be actually deleted from Box or moved to the trash.\n"
+				}
+			}
+		},
+		"/copy": {
+			"type": "standardResponse",
+			"post": {
+				"description": "Used to create a copy of a file in another folder. The original version of\nthe file will not be altered.\n",
+				"body": {
+					"application/json": {
+						"schema": "NewItem",
+						"example": null
+					}
+				},
+				"responses": {
+					"200": {
+						"body": {
+							"application/json": {
+								"schema": "File",
+								"example": null
+							}
+						}
+					},
+					"409": {
+						"description": "Will be returned if the intended destination folder is the same, as this\nwill cause a name collision.\n"
+					}
+				}
+			}
+		},
+		"/trash": {
+			"type": "standardResponse",
+			"get": {
+				"description": "Retrieves an item that has been moved to the trash. The full item will be\nreturned, including information about when the it was moved to the trash.\n",
+				"responses": {
+					"200": {
+						"body": {
+							"application/json": {
+								"schema": "File",
+								"example": null
+							}
+						}
+					}
+				}
+			},
+			"delete": {
+				"description": "Permanently deletes an item that is in the trash. The item will no longer\nexist in Box. This action cannot be undone.\n"
+			}
+		},
+		"/tasks": {
+			"type": "standardResponse",
+			"get": {
+				"description": "Retrieves all of the tasks for given file. A collection of mini task objects\nis returned. If there are no tasks, an empty collection will be returned.\n",
+				"responses": {
+					"200": {
+						"body": {
+							"application/json": {
+								"schema": "TaskSummariesCollection",
+								"example": null
+							}
+						}
+					}
+				}
+			}
+		},
+		"/thumbnail{extension}": {
+			"type": "standardResponse",
+			"uriParameters": {
+				"extension": {
+					"description": "Generated file's extension. Currently thumbnails are only available in .png format\nand will only be generated for image file formats.\n",
+					"enum": [
+						".png"
+					]
+				}
+			},
+			"get": {
+				"description": "Retrieves a thumbnail, or smaller image representation, of this file. Sizes\nof 32x32, 64x64, 128x128, and 256x256 can be returned.\nCurrently thumbnails are only available in .png format and will only be\ngenerated for image file formats.\nThere are three success cases that your application needs to account for:\n  - If the thumbnail isn't available yet, a 202 Accepted HTTP status will\n      be returned, including a 'Location' header pointing to a placeholder\n      graphic that can be used until the thumbnail is returned. A `Retry-After`\n      header will also be returned, indicating the time in seconds after which\n      the thumbnail will be available. Your application should only attempt to\n      get the thumbnail again after Retry-After time.\n  - If Box can't generate a thumbnail for this file type, a 302 Found\n      response will be returned, redirecting to a placeholder graphic in the\n      requested size for this particular file type.\n  - If Box is unable to generate a thumbnail for this particular file, a\n      404 'Not Found' response will be returned with a code of\n      preview_cannot_be_generated. If there are any bad parameters sent in, a\n      standard 400 'Bad Request' will be returned.\n",
+				"queryParameters": {
+					"min_height": {
+						"description": "The minimum height of the thumbnail.",
+						"type": "integer",
+						"example": 32
+					},
+					"min_width": {
+						"description": "The minimum width of the thumbnail.",
+						"type": "integer",
+						"example": 32
+					},
+					"max_height": {
+						"description": "The maximum height of the thumbnail",
+						"type": "integer",
+						"example": 332
+					},
+					"max_width": {
+						"description": "The maximum width of the thumbnail",
+						"type": "integer",
+						"example": 322
+					}
+				},
+				"responses": {
+					"200": {
+						"description": "The thumbnail image is returned\n"
+					},
+					"202": {
+						"description": "The thumbnail isn't available yet. HTTP status is returned, including\na Location header pointing to a placeholder graphic that can be used\nuntil the thumbnail is returned.\n",
+						"headers": {
+							"Retry-After": {
+								"description": "Number of seconds to wait before retrying generating the thumbnail\ngeneration\n",
+								"type": "integer",
+								"required": true,
+								"example": 10
+							}
+						}
+					},
+					"302": {
+						"description": "Box can't generate a thumbnail for this file type. The response\nredirects to a placeholder graphic in the requested size for this\nparticular file type\n"
+					}
+				}
+			}
+		},
+		"/comments": {
+			"type": "standardResponse",
+			"get": {
+				"description": "Retrieves the comments on a particular file, if any exist. A collection of\ncomment objects are returned. If there are no comments on the file, an empty\ncomments array is returned.\n",
+				"responses": {
+					"200": {
+						"body": {
+							"application/json": {
+								"schema": "CommentsCollection",
+								"example": null
+							}
+						}
+					}
+				}
+			}
+		},
+		"/content": {
+			"type": "standardResponse",
+			"get": {
+				"description": "Retrieves the actual data of the file. An optional version parameter can be\nset to download a previous version of the file.\n",
+				"queryParameters": {
+					"version": {
+						"description": "The ID specific version of this file to download."
+					}
+				},
+				"responses": {
+					"202": {
+						"description": "If the file is not ready to be downloaded (i.e. in the case where the\nfile was uploaded immediately before the download request), a response\nwith an HTTP status of **202** Accepted will be returned with a `Retry-After`\nheader indicating the time in seconds after which the file will be\navailable for the client to download.\n"
+					},
+					"302": {
+						"description": "Found"
+					}
+				}
+			}
+		}
+	},
+	"/shared_items": {
+		"type": "standardResponse",
+		"get": {
+			"description": "Used to retrieve the metadata about a shared item when only given a shared\nlink. Because of varying permission levels for shared links, a password may\nbe required to retrieve the shared item. Once the item has been retrieved,\nyou can make API requests against the actual resource `/files/{id}` or\n`/folders/{id}` as long as the shared link and optional password are in the\nheader.\nA full file or folder object is returned if the shared link is valid and the\nuser has access to it. An error may be returned if the link is invalid, if a\npassword is required, or if the user does not have access to the file.\n",
+			"headers": {
+				"BoxApi": {
+					"description": "A string containing the shared link and the password, it should be URL\nencoded, the format is:\n```\n  shared_link=[shared resource's link] shared_link_password=[password for the link]\n```\nshared_link is mandatory.\n",
+					"required": true,
+					"example": "BoxApi: shared_link=SHARED_LINK"
+				}
+			},
+			"responses": {
+				"200": {
+					"description": "A full file or folder object is returned if the shared link is valid and the user has access to it. An error may be returned if the link is invalid, if a password is required, or if the user does not have access to the file.",
+					"body": {
+						"application/json": {
+							"schema": "File",
+							"example": null
+						}
+					}
+				}
+			}
+		}
+	},
+	"/comments": {
+		"type": {
+			"collection": {
+				"objectName": "Comment"
+			}
+		},
+		"is": [
+			"fieldAware"
+		],
+		"post": {
+			"description": "Used to add a comment by the user to a specific file or comment (i.e. as a\nreply comment).\n",
+			"body": {
+				"application/json": {
+					"example": null
+				}
+			},
+			"responses": {
+				"200": {
+					"body": {
+						"application/json": {
+							"schema": "CommentsCollection",
+							"example": null
+						}
+					}
+				}
+			}
+		},
+		"/{commentId}": {
+			"type": {
+				"collectionItem": {
+					"item": "Comment"
+				}
+			},
+			"uriParameters": {
+				"commentId": {
+					"description": "Box's unique string identifying this comment."
+				}
+			},
+			"get": {
+				"description": "Used to retrieve the message and metadata about a specific comment.\nInformation about the user who created the comment is also included.\n",
+				"responses": {
+					"200": {
+						"body": {
+							"application/json": {
+								"example": null
+							}
+						}
+					}
+				}
+			},
+			"put": {
+				"description": "Used to update the message of the comment. The full updated comment object\nis returned if the ID is valid and if the user has access to the comment.\n",
+				"body": {
+					"application/json": {
+						"schema": "CommentUpdate",
+						"example": null
+					}
+				},
+				"responses": {
+					"200": {
+						"body": {
+							"application/json": {
+								"example": null
+							}
+						}
+					}
+				}
+			},
+			"delete": {
+				"description": "Permanently deletes a comment. An empty 204 response is returned to confirm\ndeletion of the comment. Errors can be thrown if the ID is invalid or if the\nuser is not authorized to delete this particular comment.\n"
+			}
+		}
+	},
+	"/collaborations": {
+		"type": {
+			"collection": {
+				"objectName": "Collaboration"
+			}
+		},
+		"get": {
+			"description": "Used to retrieve all pending collaboration invites for this user.",
+			"queryParameters": {
+				"status": {
+					"description": "The status of this collab. Can be accepted, pending, or rejected",
+					"required": true,
+					"enum": [
+						"accepted",
+						"rejected",
+						"pending"
+					]
+				}
+			},
+			"responses": {
+				"200": {
+					"description": "A collection of pending collaboration objects are returned. If the user has no pending collaborations, the collection will be empty.",
+					"body": {
+						"application/json": {
+							"schema": "CollaborationsCollection",
+							"example": null
+						}
+					}
+				}
+			}
+		},
+		"post": {
+			"description": "Used to add a collaboration for a single user to a folder. Either an email\naddress or a user ID can be used to create the collaboration.\n",
+			"body": {
+				"application/json": {
+					"example": null
+				}
+			},
+			"responses": {
+				"201": {
+					"body": {
+						"application/json": {
+							"example": null
+						}
+					}
+				}
+			}
+		},
+		"/{id}": {
+			"type": {
+				"collectionItem": {
+					"item": "Collaboration"
+				}
+			},
+			"put": {
+				"description": "Used to edit an existing collaboration. Descriptions of the various roles can be found here.",
+				"body": {
+					"application/json": {
+						"example": null
+					}
+				},
+				"responses": {
+					"200": {
+						"body": {
+							"application/json": {
+								"example": null
+							}
+						}
+					}
+				}
+			},
+			"delete": {
+				"description": "Used to delete a single collaboration."
+			}
+		}
+	},
+	"/search": {
+		"type": "standardResponse",
+		"get": {
+			"is": [
+				"pageable: { default: 30 }"
+			],
+			"description": "Searching a User's Account. The search endpoint provides a simple way of\nfinding items that are accessible in a given user's Box account.\nA collection of search results is returned. If there are no matching search\nresults, the entries array will be empty.\nALERT: We'll be adding more types of items returned as search results and more\nfilters on search queries, so as you're parsing the results, be prepared to skip\nover any types of items your app does not recognize.\n",
+			"queryParameters": {
+				"query": {
+					"description": "The string to search for; can be matched against item names, descriptions,\ntext content of a file, and other fields of the different item types.\n",
+					"required": true,
+					"example": "someName"
+				}
+			},
+			"responses": {
+				"200": {
+					"body": {
+						"application/json": {
+							"schema": "SearchResults",
+							"example": null
+						}
+					}
+				}
+			}
+		}
+	},
+	"/events": {
+		"type": "standardResponse",
+		"get": {
+			"description": "Use this to get events for a given user. A chunk of event objects is\nreturned for the user based on the parameters passed in. Parameters\nindicating how many chunks are left as well as the next stream_position\nare also returned.\n",
+			"queryParameters": {
+				"stream_position": {
+					"description": "The location in the event stream at which you want to start receiving\nevents. Can specify special case _now_ to get 0 events and the lates\nstream position for initialization. A collection of events is returned.\n",
+					"default": 0,
+					"example": 0
+				},
+				"stream_type": {
+					"description": "Limits the type of events returned",
+					"enum": [
+						"all",
+						"changes",
+						"sync",
+						"admin_logs"
+					],
+					"default": "all",
+					"example": "all"
+				},
+				"limit": {
+					"description": "Limits the number of events returned",
+					"type": "integer",
+					"default": 100,
+					"example": 200
+				}
+			},
+			"responses": {
+				"200": {
+					"body": {
+						"application/json": {
+							"schema": "EventsCollection",
+							"example": null
+						}
+					}
+				}
+			}
+		},
+		"options": {
+			"description": "Long polling. To get real-time notification of activity in a Box account,\nuse the long poll feature of the /events API.\nTo do so, first call the `/events` API with an OPTIONS call to retrieve the\nlong poll URL to use.\nNext, make a GET request to the provided URL to begin listening for events.\nIf an event occurs within an account you are monitoring, you will receive a\nresponse with the value new_change.\nIt's important to note that this response will not come with any other\ndetails, but should serve as a prompt to take further action such as calling\nthe `/events` endpoint with your last known `stream_position`. After sending\nthis response, the server will close the connection and you will need to\nrepeat the long poll process to begin listening for events again.\nIf no events occur for a period of time after you make the GET request to\nthe long poll URL, you will receive a response with the value reconnect. When\nyou receive this response, you'll make another OPTIONS call to the /events\nendpoint and repeat the long poll process.\n",
+			"responses": {
+				"200": {
+					"body": {
+						"application/json": {
+							"schema": "EventsPollInformation",
+							"example": null
+						}
+					}
+				}
+			}
+		}
+	},
+	"/users": {
+		"type": {
+			"collection": {
+				"objectName": "User"
+			}
+		},
+		"get": {
+			"is": [
+				"pageable: { default: 100 }"
+			],
+			"description": "Get All Users in an Enterprise. Returns a list of all users for the\nEnterprise along with their user_id, public_name, and login.\n",
+			"queryParameters": {
+				"filter_term": {
+					"description": "A string used to filter the results to only users starting with the\n`filter_term` in either the name or the login\n"
+				}
+			},
+			"responses": {
+				"200": {
+					"description": "",
+					"body": {
+						"application/json": {
+							"schema": "UsersCollection",
+							"example": null
+						}
+					}
+				}
+			}
+		},
+		"post": {
+			"description": "Used to provision a new user in an enterprise. This method only works\nfor enterprise admins.\n",
+			"body": {
+				"application/json": {
+					"example": null
+				}
+			},
+			"responses": {
+				"201": {
+					"body": {
+						"application/json": {
+							"example": null
+						}
+					}
+				}
+			}
+		},
+		"/me": {
+			"type": "standardResponse",
+			"get": {
+				"description": "Get the Current User's Information. Retrieves information about the user who\nis currently logged in i.e. the user for whom this auth token was generated.\nReturns a single complete user object.\nAn error is returned if a valid auth token is not included in the API request.\n",
+				"responses": {
+					"200": {
+						"description": "Returns a single complete user object. An error is returned if a valid auth token is not included in the API request.",
+						"body": {
+							"application/json": {
+								"schema": "User",
+								"example": null
+							}
+						}
+					}
+				}
+			}
+		},
+		"/{userId}": {
+			"type": {
+				"collectionItem": {
+					"item": "User"
+				}
+			},
+			"uriParameters": {
+				"userId": {
+					"description": "Box's unique string identifying this user."
+				}
+			},
+			"put": {
+				"is": [
+					"notifiable"
+				],
+				"description": "Update a User's Information. Used to edit the settings and information abou\na user. This method only works for enterprise admins. To roll a user out of\nthe enterprise (and convert them to a standalone free user), update the\nspecial `enterprise` attribute to be `null`.\nReturns the a full user object for the updated user. Errors may be thrown when\nthe fields are invalid or this API call is made from a non-admin account.\n",
+				"body": {
+					"application/json": {
+						"schema": "UserUpdate",
+						"example": null
+					}
+				},
+				"responses": {
+					"200": {
+						"body": {
+							"application/json": {
+								"example": null
+							}
+						}
+					}
+				}
+			},
+			"delete": {
+				"is": [
+					"notifiable"
+				],
+				"description": "Deletes a user in an enterprise account. An empty 200 response is sent to\nconfirm deletion of the user. If the user still has files in their accoun\nand the `force` parameter is not sent, an error is returned.\n",
+				"queryParameters": {
+					"force": {
+						"description": "Whether or not the user should be deleted even if this user still own files.\n",
+						"type": "boolean"
+					}
+				}
+			},
+			"/email_aliases": {
+				"type": "standardResponse",
+				"get": {
+					"description": "Get All Email Aliases for a User.\nRetrieves all email aliases for this user. The collection of email aliases\ndoes not include the primary login for the user; use GET /users/USER_ID to\nretrieve the login email address.\nIf the user_id is valid a collection of email aliases will be returned.\n",
+					"responses": {
+						"200": {
+							"body": {
+								"application/json": {
+									"schema": "EmailAliasesCollection",
+									"example": null
+								}
+							}
+						}
+					}
+				},
+				"post": {
+					"description": "Add an Email Alias for a User.\nAdds a new email alias to the given user's account.\nReturns the newly created email_alias object. Errors will be thrown if the\nuser_id is not valid or the particular user's email alias cannot be modified.\n",
+					"body": {
+						"application/json": {
+							"schema": "NewEmailAlias",
+							"example": null
+						}
+					},
+					"responses": {
+						"200": {
+							"body": {
+								"application/json": {
+									"schema": "EmailAlias",
+									"example": null
+								}
+							}
+						}
+					}
+				},
+				"/{email_aliases_id}": {
+					"type": "standardResponse",
+					"delete": {
+						"description": "Removes an email alias from a user. If the user has permission to remove\nthis email alias, an empty 204 No Content response will be returned to\n confirm deletion.\n"
+					}
+				}
+			},
+			"/folders/{folderId}": {
+				"type": "standardResponse",
+				"uriParameters": {
+					"folderId": {
+						"description": "Folder's identifier"
+					}
+				},
+				"put": {
+					"is": [
+						"notifiable"
+					],
+					"description": "Move Folder into Another User's Folder.\nMoves all of the content from within one user's folder into a new folder in\nanother user's account. You can move folders across users as long as the you\nhave administrative permissions. To move everything from the root folder,\nuse \"0\" which always represents the root folder of a Box account.\n",
+					"body": {
+						"application/json": {
+							"schema": "UserFolderMove",
+							"example": null
+						}
+					},
+					"responses": {
+						"200": {
+							"description": "Returns the information for the newly created destination folder.. An error is thrown if you do not have the necessary permissions to move the folder",
+							"body": {
+								"application/json": {
+									"schema": "Folder",
+									"example": null
+								}
+							}
+						}
+					}
+				}
+			},
+			"/memberships": {
+				"type": "standardResponse",
+				"get": {
+					"description": "Retrieves all of the group memberships for a given enterprise. Note this is only available to group admins. To get a users groups use the users/me/memberships endpoint.",
+					"responses": {
+						"200": {
+							"description": "A collection of group membership objects will be returned upon success.",
+							"body": {
+								"application/json": {
+									"schema": "GroupMemberships",
+									"example": null
+								}
+							}
+						}
+					}
+				}
+			}
+		}
+	},
+	"/tasks": {
+		"type": {
+			"collection": {
+				"objectName": "Collaboration"
+			}
+		},
+		"post": {
+			"description": "Create a Task. Used to create a single task for single user on a single file.\nA new task object will be returned upon success.\n",
+			"body": {
+				"application/json": {
+					"example": null
+				}
+			},
+			"responses": {
+				"201": {
+					"body": {
+						"application/json": {
+							"example": null
+						}
+					}
+				}
+			}
+		},
+		"/{taskId}": {
+			"type": {
+				"collectionItem": {
+					"item": "Task"
+				}
+			},
+			"get": {
+				"description": "Fetches a specific task.",
+				"responses": {
+					"200": {
+						"body": {
+							"application/json": {
+								"example": null
+							}
+						}
+					}
+				}
+			},
+			"put": {
+				"description": "Updates a specific task.",
+				"body": {
+					"application/json": {
+						"schema": "TaskUpdate",
+						"example": null
+					}
+				},
+				"responses": {
+					"200": {
+						"body": {
+							"application/json": {
+								"example": null
+							}
+						}
+					}
+				}
+			},
+			"delete": {
+				"description": "Permanently deletes a specific task. An empty 204 response will be\nreturned upon success.\n"
+			},
+			"/assignments": {
+				"type": "standardResponse",
+				"get": {
+					"description": "Retrieves all of the assignments for a given task.\nA collection of task assignment mini objects will be returned upon success.\n",
+					"responses": {
+						"200": {
+							"body": {
+								"application/json": {
+									"schema": "AssignmentSummariesCollecton",
+									"example": null
+								}
+							}
+						}
+					}
+				}
+			}
+		}
+	},
+	"/task_assignments": {
+		"type": {
+			"collection": {
+				"objectName": "TaskAssignment"
+			}
+		},
+		"post": {
+			"description": "Used to assign a task to a single user. There can be multiple assignments\non a given task.\nA new task assignment object will be returned upon success.\n",
+			"body": {
+				"application/json": {
+					"example": null
+				}
+			},
+			"responses": {
+				"201": {
+					"body": {
+						"application/json": {
+							"schema": "TaskAssignment",
+							"example": null
+						}
+					}
+				}
+			}
+		},
+		"/{task_assignments_id}": {
+			"type": {
+				"collectionItem": {
+					"item": "TaskAssignment"
+				}
+			},
+			"get": {
+				"description": "Fetches a specific task assignment.\nThe specified task assignment object will be returned upon success.\n",
+				"responses": {
+					"200": {
+						"body": {
+							"application/json": {
+								"example": null
+							}
+						}
+					}
+				}
+			},
+			"put": {
+				"description": "Used to update a task assignment.\nA new task assignment object will be returned upon success.\n",
+				"body": {
+					"application/json": {
+						"schema": "Task_assignmentUpdate",
+						"example": null
+					}
+				},
+				"responses": {
+					"200": {
+						"body": {
+							"application/json": {
+								"example": null
+							}
+						}
+					}
+				}
+			},
+			"delete": {
+				"description": "Deletes a specific task assignment.\nAn empty `204 No Content` response will be returned upon success.\n"
+			}
+		}
+	},
+	"/groups": {
+		"type": {
+			"collection": {
+				"objectName": "Group"
+			}
+		},
+		"get": {
+			"description": "Retrieves all of the groups for given user.",
+			"responses": {
+				"200": {
+					"description": "A collection of mini group objects is returned. If there are no groups, an empty collection will be returned.",
+					"body": {
+						"application/json": {
+							"schema": "MiniGroups",
+							"example": null
+						}
+					}
+				}
+			}
+		},
+		"post": {
+			"body": {
+				"application/json": {
+					"example": null
+				}
+			},
+			"responses": {
+				"201": {
+					"body": {
+						"application/json": {
+							"example": null
+						}
+					}
+				}
+			}
+		},
+		"/{id}": {
+			"type": {
+				"collectionItem": {
+					"item": "Group"
+				}
+			},
+			"put": {
+				"body": {
+					"application/json": {
+						"schema": "Group",
+						"example": null
+					}
+				},
+				"responses": {
+					"200": {
+						"body": {
+							"application/json": {
+								"example": null
+							}
+						}
+					}
+				}
+			},
+			"delete": {
+				"description": "Permanently deletes a specific group"
+			},
+			"/memberships": {
+				"type": "standardResponse",
+				"description": "",
+				"get": {
+					"description": "Retrieves all of the members for a given group.",
+					"responses": {
+						"200": {
+							"description": "Retrieves all of the members for a given group.",
+							"body": {
+								"application/json": {
+									"schema": "GroupMemberships",
+									"example": null
+								}
+							}
+						}
+					}
+				}
+			},
+			"/collaborations": {
+				"type": "standardResponse",
+				"get": {
+					"description": "Retrieves all of the group collaborations for a given group. Note this is only available to group admins.",
+					"responses": {
+						"200": {
+							"body": {
+								"application/json": {
+									"schema": "CollaborationsCollection",
+									"example": null
+								}
+							}
+						}
+					}
+				}
+			}
+		}
+	},
+	"/group_memberships": {
+		"type": "standardResponse",
+		"post": {
+			"description": "Used to add a member to a Group.",
+			"body": {
+				"application/json": {
+					"schema": "NewGroupMembership",
+					"example": null
+				}
+			},
+			"responses": {
+				"201": {
+					"body": {
+						"application/json": {
+							"schema": "GroupMembershipEntry",
+							"example": null
+						}
+					}
+				}
+			}
+		},
+		"/{id}": {
+			"type": "standardResponse",
+			"get": {
+				"description": "Fetches a specific group membership entry.",
+				"responses": {
+					"200": {
+						"description": "A new group membership object will be returned upon success.",
+						"body": {
+							"application/json": {
+								"schema": "GroupMembershipEntry",
+								"example": null
+							}
+						}
+					}
+				}
+			},
+			"put": {
+				"description": "Used to update a group membership.",
+				"body": {
+					"application/json": {
+						"schema": "UpdateMembership",
+						"example": null
+					}
+				},
+				"responses": {
+					"200": {
+						"description": "A new group membership object will be returned upon success.",
+						"body": {
+							"application/json": {
+								"schema": "GroupMembershipEntry",
+								"example": null
+							}
+						}
+					}
+				}
+			},
+			"delete": {
+				"description": "Deletes a specific group membership."
+			}
+		}
+	},
+	"documentation": [
+		{
+			"title": "Headline",
+			"content": null
+		}
+	]
+}
