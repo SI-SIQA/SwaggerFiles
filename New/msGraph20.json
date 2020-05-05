@@ -1,173 +1,256 @@
-swagger: '2.0'
-info:
-  version: 1.0.1
-  title: OData Service for namespace microsoft.graph
-  description: 'This OData service is located at https://graph.microsoft.com/v1.0'
-  contact: {}
-host: graph.microsoft.com
-basePath: /v1.0
-schemes:
-  - https
-consumes:
-  - application/json
-produces:
-  - application/json
-paths:
-  /directory:
-    get:
-      description: Get directory
-      summary: directory.directory.GetDirectory
-      tags:
-        - directory.directory
-      operationId: directory.directory.GetDirectory
-      deprecated: false
-      produces:
-        - application/json
-      parameters:
-        - name: $select
-          in: query
-          required: false
-          type: array
-          uniqueItems: true
-          items:
-            type: string
-            enum:
-              - id
-              - deletedItems
-          description: Select properties to be returned
-        - name: $expand
-          in: query
-          required: false
-          type: array
-          uniqueItems: true
-          items:
-            type: string
-            enum:
-              - '*'
-              - deletedItems
-          description: Expand related entities
-      responses:
-        '200':
-          description: Retrieved entity
-          schema:
-            $ref: '#/definitions/microsoft.graph.directory'
-          headers: {}
-        default:
-          description: error
-          schema:
-            $ref: '#/definitions/odata.error'
-    patch:
-      description: Update directory
-      summary: directory.directory.UpdateDirectory
-      tags:
-        - directory.directory
-      operationId: directory.directory.UpdateDirectory
-      deprecated: false
-      produces:
-        - application/json
-      consumes:
-        - application/json
-      parameters:
-        - name: body
-          in: body
-          required: true
-          description: New property values
-          schema:
-            $ref: '#/definitions/microsoft.graph.directory'
-      responses:
-        '204':
-          description: Success
-          headers: {}
-        default:
-          description: error
-          schema:
-            $ref: '#/definitions/odata.error'
-definitions:
-  entity:
-    title: entity
-    example:
-      id: String (identifier)
-    type: object
-    properties:
-      id:
-        type: string
-  microsoft.graph.directory:
-    title: microsoft.graph.directory
-    example:
-      id: String (identifier)
-      deletedItems:
-        - '@odata.type': microsoft.graph.directoryObject
-    type: object
-    properties:
-      id:
-        type: string
-      deletedItems:
-        type: array
-        items:
-          $ref: '#/definitions/microsoft.graph.directoryObject'
-  microsoft.graph.directoryObject:
-    title: microsoft.graph.directoryObject
-    type: object
-    properties:
-      id:
-        type: string
-      deletedDateTime:
-        type: string
-        format: date-time
-  odata.error:
-    title: odata.error
-    type: object
-    properties:
-      error:
-        $ref: '#/definitions/odata.error.main'
-    required:
-      - error
-  odata.error.main:
-    title: odata.error.main
-    type: object
-    properties:
-      code:
-        type: string
-      message:
-        type: string
-      target:
-        type: string
-      details:
-        type: array
-        items:
-          $ref: '#/definitions/odata.error.detail'
-      innererror:
-        description: The structure of this object is service-specific
-        type: object
-    required:
-      - code
-      - message
-  odata.error.detail:
-    title: odata.error.detail
-    type: object
-    properties:
-      code:
-        type: string
-      message:
-        type: string
-      target:
-        type: string
-    required:
-      - code
-      - message
-  $expand:
-    title: $expand
-    type: string
-    enum:
-      - '*'
-      - deletedItems
-  $select:
-    title: $select
-    type: string
-    enum:
-      - id
-      - deletedItems
-tags:
-  - name: contracts.contract
-  - name: directory.directory
-    description: ''
+{
+  "swagger": "2.0",
+  "info": {
+    "version": "1.0.1",
+    "title": "OData Service for namespace microsoft.graph",
+    "description": "This OData service is located at https://graph.microsoft.com/v1.0",
+    "contact": {}
+  },
+  "host": "graph.microsoft.com",
+  "basePath": "/v1.0",
+  "schemes": [
+    "https"
+  ],
+  "consumes": [
+    "application/json"
+  ],
+  "produces": [
+    "application/json"
+  ],
+  "paths": {
+    "/directory": {
+      "get": {
+        "description": "Get directory",
+        "summary": "directory.directory.GetDirectory",
+        "tags": [
+          "directory.directory"
+        ],
+        "operationId": "directory.directory.GetDirectory",
+        "deprecated": false,
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "$select",
+            "in": "query",
+            "required": false,
+            "type": "array",
+            "uniqueItems": true,
+            "items": {
+              "type": "string",
+              "enum": [
+                "id",
+                "deletedItems"
+              ]
+            },
+            "description": "Select properties to be returned"
+          },
+          {
+            "name": "$expand",
+            "in": "query",
+            "required": false,
+            "type": "array",
+            "uniqueItems": true,
+            "items": {
+              "type": "string",
+              "enum": [
+                "*",
+                "deletedItems"
+              ]
+            },
+            "description": "Expand related entities"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Retrieved entity",
+            "schema": {
+              "$ref": "#/definitions/microsoft.graph.directory"
+            },
+            "headers": {}
+          },
+          "default": {
+            "description": "error",
+            "schema": {
+              "$ref": "#/definitions/odata.error"
+            }
+          }
+        }
+      },
+      "patch": {
+        "description": "Update directory",
+        "summary": "directory.directory.UpdateDirectory",
+        "tags": [
+          "directory.directory"
+        ],
+        "operationId": "directory.directory.UpdateDirectory",
+        "deprecated": false,
+        "produces": [
+          "application/json"
+        ],
+        "consumes": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "description": "New property values",
+            "schema": {
+              "$ref": "#/definitions/microsoft.graph.directory"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Success",
+            "headers": {}
+          },
+          "default": {
+            "description": "error",
+            "schema": {
+              "$ref": "#/definitions/odata.error"
+            }
+          }
+        }
+      }
+    }
+  },
+  "definitions": {
+    "entity": {
+      "title": "entity",
+      "example": {
+        "id": "String (identifier)"
+      },
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string"
+        }
+      }
+    },
+    "microsoft.graph.directory": {
+      "title": "microsoft.graph.directory",
+      "example": {
+        "id": "String (identifier)",
+        "deletedItems": [
+          {
+            "@odata.type": "microsoft.graph.directoryObject"
+          }
+        ]
+      },
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string"
+        },
+        "deletedItems": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/microsoft.graph.directoryObject"
+          }
+        }
+      }
+    },
+    "microsoft.graph.directoryObject": {
+      "title": "microsoft.graph.directoryObject",
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string"
+        },
+        "deletedDateTime": {
+          "type": "string",
+          "format": "date-time"
+        }
+      }
+    },
+    "odata.error": {
+      "title": "odata.error",
+      "type": "object",
+      "properties": {
+        "error": {
+          "$ref": "#/definitions/odata.error.main"
+        }
+      },
+      "required": [
+        "error"
+      ]
+    },
+    "odata.error.main": {
+      "title": "odata.error.main",
+      "type": "object",
+      "properties": {
+        "code": {
+          "type": "string"
+        },
+        "message": {
+          "type": "string"
+        },
+        "target": {
+          "type": "string"
+        },
+        "details": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/odata.error.detail"
+          }
+        },
+        "innererror": {
+          "description": "The structure of this object is service-specific",
+          "type": "object"
+        }
+      },
+      "required": [
+        "code",
+        "message"
+      ]
+    },
+    "odata.error.detail": {
+      "title": "odata.error.detail",
+      "type": "object",
+      "properties": {
+        "code": {
+          "type": "string"
+        },
+        "message": {
+          "type": "string"
+        },
+        "target": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "code",
+        "message"
+      ]
+    },
+    "$expand": {
+      "title": "$expand",
+      "type": "string",
+      "enum": [
+        "*",
+        "deletedItems"
+      ]
+    },
+    "$select": {
+      "title": "$select",
+      "type": "string",
+      "enum": [
+        "id",
+        "deletedItems"
+      ]
+    }
+  },
+  "tags": [
+    {
+      "name": "contracts.contract"
+    },
+    {
+      "name": "directory.directory",
+      "description": ""
+    }
+  ]
+}
