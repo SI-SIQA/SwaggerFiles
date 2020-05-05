@@ -226,28 +226,9 @@
         "code",
         "message"
       ]
-    },
-    "$expand": {
-      "title": "$expand",
-      "type": "string",
-      "enum": [
-        "*",
-        "deletedItems"
-      ]
-    },
-    "$select": {
-      "title": "$select",
-      "type": "string",
-      "enum": [
-        "id",
-        "deletedItems"
-      ]
     }
   },
   "tags": [
-    {
-      "name": "contracts.contract"
-    },
     {
       "name": "directory.directory",
       "description": ""
