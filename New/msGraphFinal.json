@@ -1,0 +1,287 @@
+{
+	"openapi": "3.0.1",
+	"info": {
+		"title": "OData Service for namespace microsoft.graph",
+		"description": "This OData service is located at https://graph.microsoft.com/v1.0",
+		"version": "1.0.1"
+	},
+	"servers": [
+		{
+			"url": "https://graph.microsoft.com/v1.0"
+		}
+	],
+	"paths": {
+		"/directory": {
+			"get": {
+				"tags": [
+					"directory.directory"
+				],
+				"summary": "Get directory",
+				"operationId": "directory.directory.GetDirectory",
+				"parameters": [
+					{
+						"name": "$select",
+						"in": "query",
+						"description": "Select properties to be returned",
+						"schema": {
+							"uniqueItems": true,
+							"type": "array",
+							"items": {
+								"enum": [
+									"id",
+									"deletedItems"
+								],
+								"type": "string"
+							}
+						}
+					},
+					{
+						"name": "$expand",
+						"in": "query",
+						"description": "Expand related entities",
+						"schema": {
+							"uniqueItems": true,
+							"type": "array",
+							"items": {
+								"enum": [
+									"*",
+									"deletedItems"
+								],
+								"type": "string"
+							}
+						}
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "Retrieved entity",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/microsoft.graph.directory"
+								}
+							}
+						}
+					},
+					"default": {
+						"$ref": "#/components/responses/error"
+					}
+				},
+				"x-ms-docs-operation-type": "operation"
+			},
+			"patch": {
+				"tags": [
+					"directory.directory"
+				],
+				"summary": "Update directory",
+				"operationId": "directory.directory.UpdateDirectory",
+				"requestBody": {
+					"description": "New property values",
+					"content": {
+						"application/json": {
+							"schema": {
+								"$ref": "#/components/schemas/microsoft.graph.directory"
+							}
+						}
+					},
+					"required": true
+				},
+				"responses": {
+					"204": {
+						"description": "Success"
+					},
+					"default": {
+						"$ref": "#/components/responses/error"
+					}
+				},
+				"x-ms-docs-operation-type": "operation"
+			}
+		}
+	},
+	"components": {
+		"schemas": {
+			"microsoft.graph.entity": {
+				"title": "entity",
+				"type": "object",
+				"properties": {
+					"id": {
+						"type": "string"
+					}
+				},
+				"example": {
+					"id": "String (identifier)"
+				}
+			},
+			"microsoft.graph.directory": {
+				"allOf": [
+					{
+						"$ref": "#/components/schemas/microsoft.graph.entity"
+					},
+					{
+						"title": "directory",
+						"type": "object",
+						"properties": {
+							"deletedItems": {
+								"type": "array",
+								"items": {
+									"$ref": "#/components/schemas/microsoft.graph.directoryObject"
+								}
+							}
+						}
+					}
+				],
+				"example": {
+					"id": "String (identifier)",
+					"deletedItems": [
+						{
+							"@odata.type": "microsoft.graph.directoryObject"
+						}
+					]
+				}
+			},
+			"microsoft.graph.directoryObject": {
+				"allOf": [
+					{
+						"$ref": "#/components/schemas/microsoft.graph.entity"
+					},
+					{
+						"title": "directoryObject",
+						"type": "object",
+						"properties": {
+							"deletedDateTime": {
+								"pattern": "^[0-9]{4,}-(0[1-9]|1[012])-(0[1-9]|[12][0-9]|3[01])T([01][0-9]|2[0-3]):[0-5][0-9]:[0-5][0-9]([.][0-9]{1,12})?(Z|[+-][0-9][0-9]:[0-9][0-9])$",
+								"type": "string",
+								"format": "date-time",
+								"nullable": true
+							}
+						}
+					}
+				],
+				"example": {
+					"id": "String (identifier)",
+					"deletedDateTime": "DateTimeOffset (timestamp)"
+				}
+			},
+			"odata.error": {
+				"required": [
+					"error"
+				],
+				"type": "object",
+				"properties": {
+					"error": {
+						"$ref": "#/components/schemas/odata.error.main"
+					}
+				}
+			},
+			"odata.error.main": {
+				"required": [
+					"code",
+					"message"
+				],
+				"type": "object",
+				"properties": {
+					"code": {
+						"type": "string"
+					},
+					"message": {
+						"type": "string"
+					},
+					"target": {
+						"type": "string"
+					},
+					"details": {
+						"type": "array",
+						"items": {
+							"$ref": "#/components/schemas/odata.error.detail"
+						}
+					},
+					"innererror": {
+						"type": "object",
+						"description": "The structure of this object is service-specific"
+					}
+				}
+			},
+			"odata.error.detail": {
+				"required": [
+					"code",
+					"message"
+				],
+				"type": "object",
+				"properties": {
+					"code": {
+						"type": "string"
+					},
+					"message": {
+						"type": "string"
+					},
+					"target": {
+						"type": "string"
+					}
+				}
+			}
+		},
+		"responses": {
+			"error": {
+				"description": "error",
+				"content": {
+					"application/json": {
+						"schema": {
+							"$ref": "#/components/schemas/odata.error"
+						}
+					}
+				}
+			}
+		},
+		"parameters": {
+			"top": {
+				"name": "$top",
+				"in": "query",
+				"description": "Show only the first n items",
+				"schema": {
+					"minimum": 0,
+					"type": "integer"
+				},
+				"example": 50
+			},
+			"skip": {
+				"name": "$skip",
+				"in": "query",
+				"description": "Skip the first n items",
+				"schema": {
+					"minimum": 0,
+					"type": "integer"
+				}
+			},
+			"count": {
+				"name": "$count",
+				"in": "query",
+				"description": "Include count of items",
+				"schema": {
+					"type": "boolean"
+				}
+			},
+			"filter": {
+				"name": "$filter",
+				"in": "query",
+				"description": "Filter items by property values",
+				"schema": {
+					"type": "string"
+				}
+			},
+			"search": {
+				"name": "$search",
+				"in": "query",
+				"description": "Search items by search phrases",
+				"schema": {
+					"type": "string"
+				}
+			}
+		}
+	},
+	"tags": [
+		{
+			"name": "contracts.contract",
+			"x-ms-docs-toc-type": "page"
+		}
+	]
+}
