@@ -3,7 +3,7 @@
   "info": {
     "version": "3.0.0",
     "title": "SI Metering",
-    "description": "These are the various BOX REST APIs"
+    "description": "This is SI Metering Report download REST APIs"
   },
   "host": "qa-pod1-ing.upgrade.infaqa.com",
   "schemes": [
