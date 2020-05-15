@@ -1,0 +1,69 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "version": "3.0.0",
+    "title": "SI Metering",
+    "description": "These are the various BOX REST APIs"
+  },
+  "host": "qa-pod1-ing.upgrade.infaqa.com",
+  "schemes": [
+    "https"
+  ],
+  "paths": {
+    "/ingestion/UsageDetails": {
+      "post": {
+        "summary": "get metering file",
+        "description": "get metering xls",
+        "operationId": "downloadFile",
+        "parameters": [
+          {
+            "in": "header",
+            "name": "Content-Type",
+            "default": "application/json",
+            "type": "string"
+          },
+          {
+            "in": "header",
+            "name": "SELECTED_ORG_ID",
+            "default": "4Sk8vvYjcjddFGv1fj8Cc5",
+            "type": "string"
+          },
+          {
+            "in": "header",
+            "name": "IDS-SESSION-ID",
+            "default": "4Sk8vvYjcjddFGv1fj8Cc5",
+            "type": "string"
+          },
+          {
+            "in": "body",
+            "name": "requestBody",
+            "schema": {
+              "$ref": "#/definitions/Box"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successfully downloaded"
+          }
+        }
+      }
+    }
+  },
+  "definitions": {
+    "Box": {
+      "type": "object",
+      "required": [
+        "startDate"
+      ],
+      "properties": {
+        "startDate": {
+          "type": "string"
+        },
+        "endDate": {
+          "type": "string"
+        }
+      }
+    }
+  }
+}
