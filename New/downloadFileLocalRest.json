@@ -1,0 +1,38 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "version": "3.0.0",
+    "title": "Download File",
+    "description": "These are the various BOX REST APIs"
+  },
+  "host": "INW1PF1DC2TE:4000",
+  "schemes": [
+    "http"
+  ],
+  "paths": {
+    "/downloadFile/{filename}": {
+      "get": {
+        "summary": "get metering file",
+        "description": "get metering xls",
+        "operationId": "downloadFile",
+        "parameters": [
+          {
+            "name": "filename",
+            "in": "path",
+            "description": "Id of employee whose roles we are fetching",
+            "type": "string",
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "downloaded",
+            "schema": {
+              "type": "string"
+            }
+          }
+        }
+      }
+    }
+  }
+}
