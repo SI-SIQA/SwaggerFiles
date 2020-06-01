@@ -1,0 +1,53 @@
+{
+  "swagger" : "2.0",
+  "info" : {
+    "description" : null,
+    "version" : "1.0.0",
+    "title" : null,
+    "termsOfService" : null,
+    "contact" : null,
+    "license" : null
+  },
+  "host" : "INW1PF1DC2TE:4000",
+  "basePath" : "/courses",
+  "schemes" : [ "http" ],
+  "paths" : {
+    "/" : {
+      "get" : {
+        "tags" : [ "getCourses" ],
+        "summary" : null,
+        "description" : null,
+        "operationId" : "getCourses",
+        "produces" : [ "application/json" ],
+        "consumes" : [ "application/json" ],
+        "parameters" : [ ],
+        "responses" : {
+          "200" : {
+            "description" : "successful operation",
+            "schema" : {
+              "type" : "array",
+              "items" : {
+                "$ref" : "#/definitions/getCourses"
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "definitions" : {
+    "getCourses" : {
+      "properties" : {
+        "id" : {
+          "type" : "string"
+        },
+        "name" : {
+          "type" : "string"
+        },
+        "description" : {
+          "type" : "string"
+        }
+      }
+    }
+  }
+}
