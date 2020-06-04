@@ -1,0 +1,52 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "version": "3.0.0",
+    "title": "TrainDemoAPI",
+    "description": "These are Train Demo API"
+  },
+  "host": "INW1PF1DC2TE:9000",
+  "schemes": [
+    "http"
+  ],
+  "paths": {
+    "/trains": {
+      "get": {
+        "summary": "get all trains currently running live details",
+        "operationId": "getAllTrains",
+        "description": "Get All Trains live Detail\n",
+        "responses": {
+          "200": {
+            "description": "successfully searched"
+          },
+          "400": {
+            "description": "bad input parameter"
+          }
+        }
+      }
+    },
+    "/trains/{id}": {
+      "get": {
+        "summary": "Get live detail about a particular train",
+        "operationId": "getTrainById",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "description": "trainId",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successfully searched"
+          },
+          "400": {
+            "description": "bad input parameter"
+          }
+        }
+      }
+    }
+  }
+}
