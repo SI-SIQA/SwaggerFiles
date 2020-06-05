@@ -1,0 +1,71 @@
+{
+  "info": {
+    "title": "alphavantage API",
+    "description": "Just to check",
+    "version": "1.0.0"
+  },
+  "swagger": "2.0",
+  "schemes": [
+    "https"
+  ],
+  "host": "www.alphavantage.co",
+  "paths": {
+    "/query": {
+      "get": {
+        "tags": [
+          "Current alphavantage Data"
+        ],
+        "summary": "Call for alphavantage data",
+        "operationId": "getData",
+        "parameters": [
+          {
+            "name": "apikey",
+            "in": "query",
+            "type": "string",
+            "required": true
+          },
+          {
+            "name": "function",
+            "in": "query",
+            "type": "string",
+            "required": true,
+            "default": "TIME_SERIES_INTRADAY"
+          },
+          {
+            "name": "symbol",
+            "in": "query",
+            "type": "string",
+            "required": true,
+            "default": "IBM"
+          },
+          {
+            "name": "interval",
+            "in": "query",
+            "type": "string",
+            "required": false
+          },
+          {
+            "name": "outputsize",
+            "in": "query",
+            "type": "string",
+            "required": false
+          },
+          {
+            "name": "datatype",
+            "in": "query",
+            "type": "string",
+            "required": false
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response"
+          },
+          "404": {
+            "description": "Not found response"
+          }
+        }
+      }
+    }
+  }
+}
