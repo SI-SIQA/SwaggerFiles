@@ -1,0 +1,36 @@
+{
+  "info": {
+    "title": "HTTP STATUS API",
+    "description": "Just to check all status",
+    "version": "1.0.0"
+  },
+  "swagger": "2.0",
+  "schemes": [
+    "https"
+  ],
+  "host": "httpstat.us",
+  "paths": {
+    "/{id}": {
+      "get": {
+        "tags": [
+          "HTTP STATUS"
+        ],
+        "summary": "Call for HTTP Status",
+        "operationId": "getHttpStatus",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "type": "string",
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response"
+          }
+        }
+      }
+    }
+  }
+}
