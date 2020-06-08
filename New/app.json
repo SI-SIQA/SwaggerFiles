@@ -1,0 +1,28 @@
+{
+  "info": {
+    "title": "HTTP STATUS API",
+    "description": "Get App",
+    "version": "1.0.0"
+  },
+  "swagger": "2.0",
+  "schemes": [
+    "http"
+  ],
+  "host": "INW1PF1DC2TE:4000",
+  "paths": {
+    "/app": {
+      "get": {
+        "tags": [
+          "Get APP"
+        ],
+        "summary": "Call for app",
+        "operationId": "getApp",
+        "responses": {
+          "200": {
+            "description": "Successful response"
+          }
+        }
+      }
+    }
+  }
+}
