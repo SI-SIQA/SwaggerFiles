@@ -137,6 +137,4 @@
           },
           "400": {
             "description": "bad input parameter"
-          }
-        }
-      }
+      
