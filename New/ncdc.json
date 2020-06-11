@@ -1,0 +1,138 @@
+{
+  "info": {
+    "title": "NCEI API",
+    "description": "Checking Station APIs of NCEI",
+    "version": "1.0.0"
+  },
+  "swagger": "2.0",
+  "schemes": [
+    "https"
+  ],
+  "host": "www.ncdc.noaa.gov",
+  "basePath": "/cdo-web/api/v2",
+  "paths": {
+    "/stations": {
+      "get": {
+        "tags": [
+          "Stations Data"
+        ],
+        "summary": "Call for checking all station data",
+        "operationId": "getAllStations",
+        "parameters": [
+          {
+            "name": "token",
+            "in": "header",
+            "type": "string",
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response"
+          },
+          "404": {
+            "description": "Not found response"
+          }
+        }
+      }
+    },
+    "/stations/{id}": {
+      "get": {
+        "tags": [
+          "Station Data Check by Id"
+        ],
+        "summary": "Call for checking station data",
+        "operationId": "getStationById",
+        "parameters": [
+          {
+            "name": "token",
+            "in": "header",
+            "type": "string",
+            "required": true
+          },
+          {
+            "name": "id",
+            "in": "path",
+            "type": "string",
+            "required": true
+          },
+          {
+            "name": "datasetid",
+            "in": "query",
+            "type": "string",
+            "required": false
+          },
+          {
+            "name": "locationid",
+            "in": "query",
+            "type": "string",
+            "required": false
+          },
+          {
+            "name": "datacategoryid",
+            "in": "query",
+            "type": "string",
+            "required": false,
+            "default": "IBM"
+          },
+          {
+            "name": "datatypeid",
+            "in": "query",
+            "type": "string",
+            "required": false
+          },
+          {
+            "name": "extent",
+            "in": "query",
+            "type": "string",
+            "required": false
+          },
+          {
+            "name": "startdate",
+            "in": "query",
+            "type": "string",
+            "required": false
+          },
+          {
+            "name": "enddate",
+            "in": "query",
+            "type": "string",
+            "required": false
+          },
+          {
+            "name": "sortfield",
+            "in": "query",
+            "type": "string",
+            "required": false
+          },
+          {
+            "name": "sortorder",
+            "in": "query",
+            "type": "string",
+            "required": false
+          },
+          {
+            "name": "limit",
+            "in": "query",
+            "type": "string",
+            "required": false
+          },
+          {
+            "name": "offset",
+            "in": "query",
+            "type": "string",
+            "required": false
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response"
+          },
+          "404": {
+            "description": "Not found response"
+          }
+        }
+      }
+    }
+  }
+}
