@@ -47,6 +47,29 @@
           }
         }
       }
+    },
+    "/trains/stations": {
+      "get": {
+        "summary": "Get live detail about a particular train",
+        "operationId": "getTrainPassingbyStation",
+        "parameters": [
+          {
+            "in": "query",
+            "name": "stationCode",
+            "description": "Station Name",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successfully searched"
+          },
+          "400": {
+            "description": "bad input parameter"
+          }
+        }
+      }
     }
   }
 }
