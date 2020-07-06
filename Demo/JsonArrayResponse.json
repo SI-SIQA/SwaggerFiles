@@ -1,0 +1,108 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "version": "3.0.0",
+    "title": "Demo",
+    "description": "These are Demo API"
+  },
+  "host": "reqres.in",
+  "schemes": [
+    "http",
+    "https"
+  ],
+  "paths": {
+    "/api/users": {
+      "get": {
+        "summary": "Get Users Details",
+        "operationId": "getAllUsers",
+        "description": "Get All Users Detail\n",
+        "parameters": [
+          {
+            "in": "query",
+            "name": "page",
+            "description": "Page Number",
+            "required": true,
+            "type": "string",
+            "default": 1
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successfully searched"
+          },
+          "400": {
+            "description": "bad input parameter"
+          }
+        }
+      },
+      "post": {
+        "summary": "Get Users Details",
+        "operationId": "postNewUser",
+        "description": "Post New User\n",
+        "parameters": [
+          {
+            "in": "body",
+            "name": "requestBody",
+            "schema": {
+              "$ref": "#/definitions/User"
+            }
+          },
+          {
+            "in": "header",
+            "name": "Content-Type",
+            "default": "application/json",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successfully searched"
+          },
+          "400": {
+            "description": "bad input parameter"
+          }
+        }
+      }
+    },
+    "/api/users/{id}": {
+      "get": {
+        "summary": "Get Specific User Details",
+        "operationId": "getUserById",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "description": "userId",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successfully searched"
+          },
+          "400": {
+            "description": "bad input parameter"
+          }
+        }
+      }
+    }
+  },
+  "definitions": {
+    "User": {
+      "type": "object",
+      "required": [
+        "name",
+        "job"
+      ],
+      "properties": {
+        "name": {
+          "type": "string"
+        },
+        "job": {
+          "type": "string"
+        }
+      }
+    }
+  }
+}
