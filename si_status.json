@@ -1,89 +1,51 @@
 {
-    "basePath": "/sisvc/monitor/v1",
-    "definitions": {
-    },
-    "host": "qa-pod1-ing.rel.infaqa.com",
-	 "schemes": [
-    "http","https"
-  ],
+    "host": "https://qa-pod1-ing.rel.infaqa.com",
     "info": {
-        "description": "API for retrieving the status of dataflows",
-        "title": "Dataflows Status API",
-        "version": "1.0.0"
+        "description": "These are to hit DB API",
+        "title": "Hit_Db",
+        "version": "3.0.0"
     },
     "paths": {
-        "/status/dataflows/{dataflowid}": {
+        "/sisvc/deployment-api/v1/DeploymentStatuses": {
             "get": {
-				 "operationId": "getStatus",
-                "description": "Retrieves the status of a specified dataflow",
+                "description": "Get All Dataflows Status",
+                "operationId": "getAllCourses",
+                "responses": {
+                    "200": {
+                        "description": "successfully searched"
+                    },
+                    "400": {
+                        "description": "bad input parameter"
+                    }
+                },
+                "summary": "get all dataflow detail"
+            },
+        "/sisvc/monitor/v1/status/dataflows/{id}": {
+            "get": {
+                "operationId": "getDataflowById",
                 "parameters": [
                     {
-                        "description": "ID of the dataflow to retrieve status for",
+                        "description": "dataflowid",
                         "in": "path",
-                        "name": "dataflowid",
+                        "name": "id",
                         "required": true,
                         "type": "string"
                     }
                 ],
                 "responses": {
                     "200": {
-                        "description": "Successful response",
-                        "schema": {
-                            "properties": {
-                                "dataflowid": {
-                                    "example": "12345",
-                                    "type": "string"
-                                },
-                                "details": {
-                                    "properties": {
-                                        "endTime": {
-                                            "example": "2023-01-01T01:00:00Z",
-                                            "format": "date-time",
-                                            "type": "string"
-                                        },
-                                        "startTime": {
-                                            "example": "2023-01-01T00:00:00Z",
-                                            "format": "date-time",
-                                            "type": "string"
-                                        }
-                                    },
-                                    "type": "object"
-                                },
-                                "status": {
-                                    "example": "running",
-                                    "type": "string"
-                                }
-                            },
-                            "type": "object"
-                        }
+                        "description": "successfully searched"
                     },
                     "400": {
-                        "description": "Bad Request"
-                    },
-                    "401": {
-                        "description": "Unauthorized"
-                    },
-                    "404": {
-                        "description": "Dataflow not found"
-                    },
-                    "500": {
-                        "description": "Internal server error"
+                        "description": "bad input parameter"
                     }
                 },
-                "summary": "Get Dataflow Status"
+                "summary": "Get detail about a dataflow"
             }
         }
     },
     "schemes": [
-        "https"
+        "http"
     ],
-    "securityDefinitions": {
-    },
-    "swagger": "2.0",
-    "tags": [
-        {
-            "description": "Operations about dataflow status",
-            "name": "DataflowStatus"
-        }
-    ]
+    "swagger": "2.0"
 }
