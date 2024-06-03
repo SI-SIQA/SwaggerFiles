@@ -45,7 +45,8 @@
         }
     },
     "schemes": [
-        "http"
+        "HTTP","HTTPS"
     ],
     "swagger": "2.0"
+}
 }
