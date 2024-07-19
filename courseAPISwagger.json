@@ -58,7 +58,7 @@
         }
       }
     },
-    "/CourseApi/course/{id}": {
+    "/CourseApi/courses/{id}": {
       "get": {
         "summary": "Get detail about a course",
         "operationId": "getCourseById",
